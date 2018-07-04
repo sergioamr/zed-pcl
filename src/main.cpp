@@ -61,19 +61,29 @@ inline float convertColor(float colorIn);
 
 int main(int argc, char **argv) {
 
+	cout << "##############################################################" << endl;
+	cout << "######## BOOT ################################################" << endl;
+	cout << "##############################################################" << endl;
+
     if (argc > 2) {
         cout << "Only the path of a SVO can be passed in arg" << endl;
         return -1;
     }
 
+	cout << "# CAMERA PARAMS " << endl;
+
     // Set configuration parameters
     InitParameters init_params;
-    if (argc == 2)
-        init_params.svo_input_filename = argv[1];
-    else {
+	if (argc == 2) {
+		cout << "# Open svo " << endl;
+		init_params.svo_input_filename = argv[1];
+	} else {
         init_params.camera_resolution = RESOLUTION_VGA;
         init_params.camera_fps = 30;
     }
+
+	cout << "# Open CAMERA " << endl;
+
     init_params.coordinate_units = UNIT_METER;
     init_params.coordinate_system = COORDINATE_SYSTEM_RIGHT_HANDED_Y_UP;
     init_params.depth_mode = DEPTH_MODE_PERFORMANCE;
@@ -86,7 +96,9 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    // Allocate PCL point cloud at the resolution
+	cout << "# PCL " << endl;
+
+	// Allocate PCL point cloud at the resolution
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr p_pcl_point_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
     p_pcl_point_cloud->points.resize(zed.getResolution().area());
 
